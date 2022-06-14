@@ -71,12 +71,7 @@ public class BasePickerView {
             //创建对话框
             createDialog();
             //给背景设置点击事件,这样当点击内容以外的地方会关闭界面
-            dialogView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dismiss();
-                }
-            });
+            dialogView.setOnClickListener(view -> dismiss());
         } else {
             //如果只是要显示在屏幕的下方
             //decorView是activity的根View,包含 contentView 和 titleView
@@ -207,16 +202,13 @@ public class BasePickerView {
 
     public void dismissImmediately() {
 
-        mPickerOptions.decorView.post(new Runnable() {
-            @Override
-            public void run() {
-                //从根视图移除
-                mPickerOptions.decorView.removeView(rootView);
-                isShowing = false;
-                dismissing = false;
-                if (onDismissListener != null) {
-                    onDismissListener.onDismiss(BasePickerView.this);
-                }
+        mPickerOptions.decorView.post(() -> {
+            //从根视图移除
+            mPickerOptions.decorView.removeView(rootView);
+            isShowing = false;
+            dismissing = false;
+            if (onDismissListener != null) {
+                onDismissListener.onDismiss(BasePickerView.this);
             }
         });
 
@@ -256,15 +248,12 @@ public class BasePickerView {
         }
     }
 
-    private final View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {
-                dismiss();
-                return true;
-            }
-            return false;
+    private final View.OnKeyListener onKeyBackListener = (v, keyCode, event) -> {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {
+            dismiss();
+            return true;
         }
+        return false;
     };
 
     protected BasePickerView setOutSideCancelable(boolean isCancelable) {
@@ -295,14 +284,11 @@ public class BasePickerView {
     /**
      * Called when the user touch on black overlay, in order to dismiss the dialog.
      */
-    private final View.OnTouchListener onCancelableTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                dismiss();
-            }
-            return false;
+    private final View.OnTouchListener onCancelableTouchListener = (v, event) -> {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            dismiss();
         }
+        return false;
     };
 
     public View findViewById(int id) {
@@ -321,12 +307,9 @@ public class BasePickerView {
                 dialogWindow.setGravity(Gravity.CENTER);//可以改成Bottom
             }
 
-            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    if (onDismissListener != null) {
-                        onDismissListener.onDismiss(BasePickerView.this);
-                    }
+            mDialog.setOnDismissListener(dialog -> {
+                if (onDismissListener != null) {
+                    onDismissListener.onDismiss(BasePickerView.this);
                 }
             });
         }

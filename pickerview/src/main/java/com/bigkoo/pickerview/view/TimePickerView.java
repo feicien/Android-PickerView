@@ -85,15 +85,12 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private void initWheelTime(LinearLayout timePickerView) {
         wheelTime = new WheelTime(timePickerView, mPickerOptions.type, mPickerOptions.textGravity, mPickerOptions.textSizeContent);
         if (mPickerOptions.timeSelectChangeListener != null) {
-            wheelTime.setSelectChangeCallback(new ISelectTimeCallback() {
-                @Override
-                public void onTimeSelectChanged() {
-                    try {
-                        Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+            wheelTime.setSelectChangeCallback(() -> {
+                try {
+                    Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
+                    mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             });
         }

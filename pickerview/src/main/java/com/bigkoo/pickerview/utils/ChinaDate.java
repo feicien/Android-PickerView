@@ -147,10 +147,10 @@ public class ChinaDate {
      * @param d 日
      * @return y年m月d日对应的农历
      */
-    final public static long[] calElement(int y, int m, int d) {
+    public static long[] calElement(int y, int m, int d) {
         long[] nongDate = new long[7];
-        int i = 0, temp = 0, leap = 0;
-        Date baseDate = new GregorianCalendar(0 + 1900, 0, 31).getTime();
+        int i, temp = 0, leap;
+        Date baseDate = new GregorianCalendar(1900, 0, 31).getTime();
         Date objDate = new GregorianCalendar(y, m - 1, d).getTime();
         long offset = (objDate.getTime() - baseDate.getTime()) / 86400000L;
         nongDate[5] = offset + 40;
@@ -204,7 +204,7 @@ public class ChinaDate {
         return nongDate;
     }
 
-    public final static String getChinaDate(int day) {
+    public static String getChinaDate(int day) {
         String a = "";
         if (day == 10)
             return "初十";
@@ -260,44 +260,32 @@ public class ChinaDate {
         int month = today.get(Calendar.MONTH) + 1;
         int date = today.get(Calendar.DATE);
         long[] l = calElement(year, month, date);
-        StringBuffer sToday = new StringBuffer();
-        try {
-            sToday.append(sdf.format(today.getTime()));
-            sToday.append(" 农历");
-            sToday.append(cyclical(year));
-            sToday.append('(');
-            sToday.append(AnimalsYear(year));
-            sToday.append(")年");
-            sToday.append(nStr1[(int) l[1]]);
-            sToday.append("月");
-            sToday.append(getChinaDate((int) (l[2])));
-            return sToday.toString();
-        } finally {
-            sToday = null;
-        }
+        return sdf.format(today.getTime()) +
+                " 农历" +
+                cyclical(year) +
+                '(' +
+                AnimalsYear(year) +
+                ")年" +
+                nStr1[(int) l[1]] +
+                "月" +
+                getChinaDate((int) (l[2]));
     }
 
     public static String oneDay(int year, int month, int day) {
         //   Calendar today = Calendar.getInstance(Locale.SIMPLIFIED_CHINESE);
         long[] l = calElement(year, month, day);
-        StringBuffer sToday = new StringBuffer();
-        try {
-            //   sToday.append(sdf.format(today.getTime()));
-            sToday.append(" 农历");
-            sToday.append(cyclical(year));
-            sToday.append('(');
-            sToday.append(AnimalsYear(year));
-            sToday.append(")年");
-            sToday.append(nStr1[(int) l[1]]);
-            sToday.append("月");
-            sToday.append(getChinaDate((int) (l[2])));
-            return sToday.toString();
-        } finally {
-            sToday = null;
-        }
+        //   sToday.append(sdf.format(today.getTime()));
+        return " 农历" +
+                cyclical(year) +
+                '(' +
+                AnimalsYear(year) +
+                ")年" +
+                nStr1[(int) l[1]] +
+                "月" +
+                getChinaDate((int) (l[2]));
     }
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日 EEEEE");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日 EEEEE", Locale.SIMPLIFIED_CHINESE);
 
 
     /**

@@ -39,12 +39,7 @@ public class TestCircleWheelViewActivity extends AppCompatActivity {
         mOptionsItems.add("60");
         mOptionsItems.add("70");
 
-        wheelView.setAdapter(new ArrayWheelAdapter(mOptionsItems));
-        wheelView.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                Toast.makeText(TestCircleWheelViewActivity.this, "" + mOptionsItems.get(index), Toast.LENGTH_SHORT).show();
-            }
-        });
+        wheelView.setAdapter(new ArrayWheelAdapter<>(mOptionsItems));
+        wheelView.setOnItemSelectedListener(index -> Toast.makeText(TestCircleWheelViewActivity.this, "" + mOptionsItems.get(index), Toast.LENGTH_SHORT).show());
     }
 }

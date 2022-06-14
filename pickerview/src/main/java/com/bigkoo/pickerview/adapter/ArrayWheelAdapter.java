@@ -8,7 +8,7 @@ import java.util.List;
  * The simple Array wheel adapter
  * @param <T> the element type
  */
-public class ArrayWheelAdapter<T> implements WheelAdapter {
+public class ArrayWheelAdapter<T> implements WheelAdapter<T> {
 	
 
 	// items
@@ -24,11 +24,11 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 	}
 	
 	@Override
-	public Object getItem(int index) {
+	public T getItem(int index) {
 		if (index >= 0 && index < items.size()) {
 			return items.get(index);
 		}
-		return "";
+		return null;
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 	}
 
 	@Override
-	public int indexOf(Object o){
+	public int indexOf(T o){
 		return items.indexOf(o);
 	}
 

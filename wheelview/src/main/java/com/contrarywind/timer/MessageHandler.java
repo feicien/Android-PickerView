@@ -23,7 +23,7 @@ public final class MessageHandler extends Handler {
     }
 
     @Override
-    public final void handleMessage(Message msg) {
+    public void handleMessage(Message msg) {
         switch (msg.what) {
             case WHAT_INVALIDATE_LOOP_VIEW:
                 wheelView.invalidate();

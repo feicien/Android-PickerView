@@ -126,11 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Calendar endDate = Calendar.getInstance();
         endDate.set(2069, 2, 28);
         //时间选择器 ，自定义布局
-        pvCustomLunar = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
-            }
+        pvCustomLunar = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
+            Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
         })
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
@@ -140,28 +137,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void customLayout(final View v) {
                         final TextView tvSubmit = v.findViewById(R.id.tv_finish);
                         ImageView ivCancel = v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomLunar.returnData();
-                                pvCustomLunar.dismiss();
-                            }
+                        tvSubmit.setOnClickListener(v12 -> {
+                            pvCustomLunar.returnData();
+                            pvCustomLunar.dismiss();
                         });
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomLunar.dismiss();
-                            }
-                        });
+                        ivCancel.setOnClickListener(v1 -> pvCustomLunar.dismiss());
                         //公农历切换
                         CheckBox cb_lunar = v.findViewById(R.id.cb_lunar);
-                        cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                pvCustomLunar.setLunarCalendar(!pvCustomLunar.isLunarCalendar());
-                                //自适应宽
-                                setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, isChecked ? 1f : 1.1f);
-                            }
+                        cb_lunar.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            pvCustomLunar.setLunarCalendar(!pvCustomLunar.isLunarCalendar());
+                            //自适应宽
+                            setTimePickerChildWeight(v, isChecked ? 0.8f : 1f, isChecked ? 1f : 1.1f);
                         });
 
                     }
@@ -194,28 +180,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initTimePicker() {//Dialog 模式下，在底部弹出
-        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {
-                Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
-                Log.i("pvTime", "onTimeSelect");
+        pvTime = new TimePickerBuilder(this, (date, v) -> {
+            Toast.makeText(MainActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+            Log.i("pvTime", "onTimeSelect");
 
-            }
         })
-                .setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
-                    @Override
-                    public void onTimeSelectChanged(Date date) {
-                        Log.i("pvTime", "onTimeSelectChanged");
-                    }
-                })
+                .setTimeSelectChangeListener(date -> Log.i("pvTime", "onTimeSelectChanged"))
                 .setType(new boolean[]{true, true, true, true, true, true})
                 .isDialog(true) //默认设置false ，内部实现将DecorView 作为它的父控件。
-                .addOnCancelClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.i("pvTime", "onCancelClickListener");
-                    }
-                })
+                .addOnCancelClickListener(view -> Log.i("pvTime", "onCancelClickListener"))
                 .setItemVisibleCount(5) //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
                 .setLineSpacingMultiplier(2.0f)
                 .isAlphaGradient(true)
@@ -258,11 +231,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Calendar endDate = Calendar.getInstance();
         endDate.set(2027, 2, 28);
         //时间选择器 ，自定义布局
-        pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                btn_CustomTime.setText(getTime(date));
-            }
+        pvCustomTime = new TimePickerBuilder(this, (date, v) -> {//选中事件回调
+            btn_CustomTime.setText(getTime(date));
         })
                 /*.setType(TimePickerView.Type.ALL)//default is all
                 .setCancelText("Cancel")
@@ -281,26 +251,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 /*.animGravity(Gravity.RIGHT)// default is center*/
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
-                .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
-
-                    @Override
-                    public void customLayout(View v) {
-                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomTime.returnData();
-                                pvCustomTime.dismiss();
-                            }
-                        });
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomTime.dismiss();
-                            }
-                        });
-                    }
+                .setLayoutRes(R.layout.pickerview_custom_time, v -> {
+                    final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                    ImageView ivCancel = v.findViewById(R.id.iv_cancel);
+                    tvSubmit.setOnClickListener(v12 -> {
+                        pvCustomTime.returnData();
+                        pvCustomTime.dismiss();
+                    });
+                    ivCancel.setOnClickListener(v1 -> pvCustomTime.dismiss());
                 })
                 .setContentTextSize(18)
                 .setType(new boolean[]{false, false, false, true, true, true})
@@ -318,15 +276,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * 注意 ：如果是三级联动的数据(省市区等)，请参照 JsonDataActivity 类里面的写法。
          */
 
-        pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(options2)
-                        /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
-                btn_Options.setText(tx);
-            }
+        pvOptions = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
+            //返回的分别是三个级别的选中位置
+            String tx = options1Items.get(options1).getPickerViewText()
+                    + options2Items.get(options1).get(options2)
+                    /* + options3Items.get(options1).get(options2).get(options3).getPickerViewText()*/;
+            btn_Options.setText(tx);
         })
                 .setTitleText("城市选择")
                 .setContentTextSize(20)//设置滚轮文字大小
@@ -342,12 +297,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setLabels("省", "市", "区")
                 .setOutSideColor(0x00000000) //设置外部遮罩颜色
-                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                    @Override
-                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
-                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-                    }
+                .setOptionsSelectChangeListener((options1, options2, options3) -> {
+                    String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                    Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                 })
                 .build();
 
@@ -365,44 +317,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * 自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针。
          * 具体可参考demo 里面的两个自定义layout布局。
          */
-        pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                String tx = cardItem.get(options1).getPickerViewText();
-                btn_CustomOptions.setText(tx);
-            }
+        pvCustomOptions = new OptionsPickerBuilder(this, (options1, option2, options3, v) -> {
+            //返回的分别是三个级别的选中位置
+            String tx = cardItem.get(options1).getPickerViewText();
+            btn_CustomOptions.setText(tx);
         })
-                .setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
-                    @Override
-                    public void customLayout(View v) {
-                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
-                        final TextView tvAdd = v.findViewById(R.id.tv_add);
-                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomOptions.returnData();
-                                pvCustomOptions.dismiss();
-                            }
-                        });
+                .setLayoutRes(R.layout.pickerview_custom_options, v -> {
+                    final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                    final TextView tvAdd = v.findViewById(R.id.tv_add);
+                    ImageView ivCancel = v.findViewById(R.id.iv_cancel);
+                    tvSubmit.setOnClickListener(v13 -> {
+                        pvCustomOptions.returnData();
+                        pvCustomOptions.dismiss();
+                    });
 
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvCustomOptions.dismiss();
-                            }
-                        });
+                    ivCancel.setOnClickListener(v12 -> pvCustomOptions.dismiss());
 
-                        tvAdd.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                getCardData();
-                                pvCustomOptions.setPicker(cardItem);
-                            }
-                        });
+                    tvAdd.setOnClickListener(v1 -> {
+                        getCardData();
+                        pvCustomOptions.setPicker(cardItem);
+                    });
 
-                    }
                 })
                 .isDialog(true)
                 .setOutSideCancelable(false)
@@ -414,24 +349,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initNoLinkOptionsPicker() {// 不联动的多级选项
-        pvNoLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+        pvNoLinkOptions = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
 
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+            String str = "food:" + food.get(options1)
+                    + "\nclothes:" + clothes.get(options2)
+                    + "\ncomputer:" + computer.get(options3);
 
-                String str = "food:" + food.get(options1)
-                        + "\nclothes:" + clothes.get(options2)
-                        + "\ncomputer:" + computer.get(options3);
-
-                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
         })
-                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                    @Override
-                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
-                        Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-                    }
+                .setOptionsSelectChangeListener((options1, options2, options3) -> {
+                    String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                    Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                 })
                 .setItemVisibleCount(5)
                 // .setSelectOptions(0, 1, 1)

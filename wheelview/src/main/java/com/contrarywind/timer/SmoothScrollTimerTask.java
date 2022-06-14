@@ -24,7 +24,7 @@ public final class SmoothScrollTimerTask extends TimerTask {
     }
 
     @Override
-    public final void run() {
+    public void run() {
         if (realTotalOffset == Integer.MAX_VALUE) {
             realTotalOffset = offset;
         }

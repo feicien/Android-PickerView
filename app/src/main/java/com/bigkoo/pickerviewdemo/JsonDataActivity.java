@@ -54,12 +54,9 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                     if (thread == null) {//如果已创建就不再重新创建子线程了
 
                         Toast.makeText(JsonDataActivity.this, "Begin Parse Data", Toast.LENGTH_SHORT).show();
-                        thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // 子线程中解析省市区数据
-                                initJsonData();
-                            }
+                        thread = new Thread(() -> {
+                            // 子线程中解析省市区数据
+                            initJsonData();
                         });
                         thread.start();
                     }
@@ -101,25 +98,22 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
 
     private void showPickerView() {// 弹出选择器
 
-        OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                String opt1tx = options1Items.size() > 0 ?
-                        options1Items.get(options1).getPickerViewText() : "";
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
+            //返回的分别是三个级别的选中位置
+            String opt1tx = options1Items.size() > 0 ?
+                    options1Items.get(options1).getPickerViewText() : "";
 
-                String opt2tx = options2Items.size() > 0
-                        && options2Items.get(options1).size() > 0 ?
-                        options2Items.get(options1).get(options2) : "";
+            String opt2tx = options2Items.size() > 0
+                    && options2Items.get(options1).size() > 0 ?
+                    options2Items.get(options1).get(options2) : "";
 
-                String opt3tx = options2Items.size() > 0
-                        && options3Items.get(options1).size() > 0
-                        && options3Items.get(options1).get(options2).size() > 0 ?
-                        options3Items.get(options1).get(options2).get(options3) : "";
+            String opt3tx = options2Items.size() > 0
+                    && options3Items.get(options1).size() > 0
+                    && options3Items.get(options1).get(options2).size() > 0 ?
+                    options3Items.get(options1).get(options2).get(options3) : "";
 
-                String tx = opt1tx + opt2tx + opt3tx;
-                Toast.makeText(JsonDataActivity.this, tx, Toast.LENGTH_SHORT).show();
-            }
+            String tx = opt1tx + opt2tx + opt3tx;
+            Toast.makeText(JsonDataActivity.this, tx, Toast.LENGTH_SHORT).show();
         })
 
                 .setTitleText("城市选择")
@@ -160,7 +154,6 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
             for (int c = 0; c < jsonBean.get(i).getCityList().size(); c++) {//遍历该省份的所有城市
                 String cityName = jsonBean.get(i).getCityList().get(c).getName();
                 cityList.add(cityName);//添加城市
-                ArrayList<String> city_AreaList = new ArrayList<>();//该城市的所有地区列表
 
                 //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
                 /*if (jsonBean.get(i).getCityList().get(c).getArea() == null
@@ -169,7 +162,8 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
                 }*/
-                city_AreaList.addAll(jsonBean.get(i).getCityList().get(c).getArea());
+                //该城市的所有地区列表
+                ArrayList<String> city_AreaList = new ArrayList<>(jsonBean.get(i).getCityList().get(c).getArea());
                 province_AreaList.add(city_AreaList);//添加该省所有地区数据
             }
 

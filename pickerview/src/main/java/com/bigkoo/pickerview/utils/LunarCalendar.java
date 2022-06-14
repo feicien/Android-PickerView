@@ -132,8 +132,8 @@ public class LunarCalendar {
      * @param isLeapMonth 该月是否是闰月
      * @return 返回农历日期对应的公历日期，year0, month1, day2.
      */
-    public static final int[] lunarToSolar(int year, int month, int monthDay,
-                                           boolean isLeapMonth) {
+    public static int[] lunarToSolar(int year, int month, int monthDay,
+                                     boolean isLeapMonth) {
         int dayOffset;
         int leapMonth;
         int i;
@@ -217,13 +217,13 @@ public class LunarCalendar {
         return solarInfo;
     }
 
-    public static final int[] solarToLunar(int year, int month, int monthDay) {
+    public static int[] solarToLunar(int year, int month, int monthDay) {
         int[] lunarDate = new int[4];
 
         int index = year - solar_1_1[0];
         int data = (year << 9) | (month << 5)
                 | (monthDay);
-        int solar11 = 0;
+        int solar11;
         if (solar_1_1[index] > data) {
             index--;
         }
@@ -239,7 +239,7 @@ public class LunarCalendar {
 
         int lunarY = index + solar_1_1[0];
         int lunarM = 1;
-        int lunarD = 1;
+        int lunarD;
         offset += 1;
 
         for (int i = 0; i < 13; i++) {
@@ -279,7 +279,7 @@ public class LunarCalendar {
      * @deprecated 不准确
      */
     @Deprecated
-    public static final int[] solarToLunarDeprecated(int year, int month, int monthDay) {
+    public static int[] solarToLunarDeprecated(int year, int month, int monthDay) {
         int[] lunarDate = new int[4];
         Date baseDate = new GregorianCalendar(1900, 0, 31).getTime();
         Date objDate = new GregorianCalendar(year, month - 1, monthDay).getTime();
@@ -422,7 +422,7 @@ public class LunarCalendar {
     private static long solarToInt(int y, int m, int d) {
         m = (m + 9) % 12;
         y = y - m / 10;
-        return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10
+        return 365L * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10
                 + (d - 1);
     }
 

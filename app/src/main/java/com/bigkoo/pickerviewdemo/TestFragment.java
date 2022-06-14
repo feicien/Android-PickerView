@@ -56,35 +56,22 @@ public class TestFragment extends Fragment implements View.OnClickListener {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2019, 11, 28);
         //时间选择器
-        pvTime = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-                /*btn_Time.setText(getTime(date));*/
-                Button btn = (Button) v;
-                btn.setText(getTime(date));
-            }
+        pvTime = new TimePickerBuilder(getActivity(), (date, v) -> {//选中事件回调
+            // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+            /*btn_Time.setText(getTime(date));*/
+            Button btn = (Button) v;
+            btn.setText(getTime(date));
         })
-                .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
-
-                    @Override
-                    public void customLayout(View v) {
-                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
-                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                pvTime.returnData();
-                                /*pvTime.dismiss();*/
-                            }
-                        });
-                        ivCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                /*pvTime.dismiss();*/
-                            }
-                        });
-                    }
+                .setLayoutRes(R.layout.pickerview_custom_time, v -> {
+                    final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                    ImageView ivCancel = v.findViewById(R.id.iv_cancel);
+                    tvSubmit.setOnClickListener(v12 -> {
+                        pvTime.returnData();
+                        /*pvTime.dismiss();*/
+                    });
+                    ivCancel.setOnClickListener(v1 -> {
+                        /*pvTime.dismiss();*/
+                    });
                 })
                 .setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
