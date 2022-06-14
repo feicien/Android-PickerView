@@ -30,8 +30,8 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
 
 
     private List<JsonBean> options1Items = new ArrayList<>();
-    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
+    private final ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+    private final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
     private Thread thread;
     private static final int MSG_LOAD_DATA = 0x0001;
     private static final int MSG_LOAD_SUCCESS = 0x0002;
@@ -47,7 +47,7 @@ public class JsonDataActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_LOAD_DATA:

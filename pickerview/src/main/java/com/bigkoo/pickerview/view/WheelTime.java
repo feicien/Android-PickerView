@@ -20,16 +20,16 @@ import java.util.List;
 
 public class WheelTime {
     public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private View view;
+    private final View view;
     private WheelView wv_year;
     private WheelView wv_month;
     private WheelView wv_day;
     private WheelView wv_hours;
     private WheelView wv_minutes;
     private WheelView wv_seconds;
-    private int gravity;
+    private final int gravity;
 
-    private boolean[] type;
+    private final boolean[] type;
     private static final int DEFAULT_START_YEAR = 1900;
     private static final int DEFAULT_END_YEAR = 2100;
     private static final int DEFAULT_START_MONTH = 1;
@@ -45,7 +45,7 @@ public class WheelTime {
     private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
 
-    private int textSize;
+    private final int textSize;
 
     private boolean isLunarCalendar = false;
     private ISelectTimeCallback mSelectChangeCallback;
@@ -91,14 +91,14 @@ public class WheelTime {
      */
     private void setLunar(int year, final int month, int day, boolean isLeap, int h, int m, int s) {
         // 年
-        wv_year = (WheelView) view.findViewById(R.id.year);
+        wv_year = view.findViewById(R.id.year);
         wv_year.setAdapter(new ArrayWheelAdapter(ChinaDate.getYears(startYear, endYear)));// 设置"年"的显示数据
         wv_year.setLabel("");// 添加文字
         wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
         wv_year.setGravity(gravity);
 
         // 月
-        wv_month = (WheelView) view.findViewById(R.id.month);
+        wv_month = view.findViewById(R.id.month);
         wv_month.setAdapter(new ArrayWheelAdapter(ChinaDate.getMonths(year)));
         wv_month.setLabel("");
 
@@ -112,7 +112,7 @@ public class WheelTime {
         wv_month.setGravity(gravity);
 
         // 日
-        wv_day = (WheelView) view.findViewById(R.id.day);
+        wv_day = view.findViewById(R.id.day);
         // 判断大小月及是否闰年,用来确定"日"的数据
         if (ChinaDate.leapMonth(year) == 0) {
             wv_day.setAdapter(new ArrayWheelAdapter(ChinaDate.getLunarDays(ChinaDate.monthDays(year, month))));
@@ -123,19 +123,19 @@ public class WheelTime {
         wv_day.setCurrentItem(day - 1);
         wv_day.setGravity(gravity);
 
-        wv_hours = (WheelView) view.findViewById(R.id.hour);
+        wv_hours = view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
         //wv_hours.setLabel(context.getString(R.string.pickerview_hours));// 添加文字
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
 
-        wv_minutes = (WheelView) view.findViewById(R.id.min);
+        wv_minutes = view.findViewById(R.id.min);
         wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
         //wv_minutes.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_minutes.setCurrentItem(m);
         wv_minutes.setGravity(gravity);
 
-        wv_seconds = (WheelView) view.findViewById(R.id.second);
+        wv_seconds = view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
         //wv_seconds.setLabel(context.getString(R.string.pickerview_minutes));// 添加文字
         wv_seconds.setCurrentItem(m);
@@ -247,14 +247,14 @@ public class WheelTime {
 
         currentYear = year;
         // 年
-        wv_year = (WheelView) view.findViewById(R.id.year);
+        wv_year = view.findViewById(R.id.year);
         wv_year.setAdapter(new NumericWheelAdapter(startYear, endYear));// 设置"年"的显示数据
 
 
         wv_year.setCurrentItem(year - startYear);// 初始化时显示的数据
         wv_year.setGravity(gravity);
         // 月
-        wv_month = (WheelView) view.findViewById(R.id.month);
+        wv_month = view.findViewById(R.id.month);
         if (startYear == endYear) {//开始年等于终止年
             wv_month.setAdapter(new NumericWheelAdapter(startMonth, endMonth));
             wv_month.setCurrentItem(month + 1 - startMonth);
@@ -272,7 +272,7 @@ public class WheelTime {
         }
         wv_month.setGravity(gravity);
         // 日
-        wv_day = (WheelView) view.findViewById(R.id.day);
+        wv_day = view.findViewById(R.id.day);
 
         boolean leapYear = (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
         if (startYear == endYear && startMonth == endMonth) {
@@ -356,19 +356,19 @@ public class WheelTime {
 
         wv_day.setGravity(gravity);
         //时
-        wv_hours = (WheelView) view.findViewById(R.id.hour);
+        wv_hours = view.findViewById(R.id.hour);
         wv_hours.setAdapter(new NumericWheelAdapter(0, 23));
 
         wv_hours.setCurrentItem(h);
         wv_hours.setGravity(gravity);
         //分
-        wv_minutes = (WheelView) view.findViewById(R.id.min);
+        wv_minutes = view.findViewById(R.id.min);
         wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
 
         wv_minutes.setCurrentItem(m);
         wv_minutes.setGravity(gravity);
         //秒
-        wv_seconds = (WheelView) view.findViewById(R.id.second);
+        wv_seconds = view.findViewById(R.id.second);
         wv_seconds.setAdapter(new NumericWheelAdapter(0, 59));
 
         wv_seconds.setCurrentItem(s);

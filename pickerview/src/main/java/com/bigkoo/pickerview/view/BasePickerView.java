@@ -27,7 +27,7 @@ import com.bigkoo.pickerview.utils.PickerViewAnimateUtil;
  */
 public class BasePickerView {
 
-    private Context context;
+    private final Context context;
     protected ViewGroup contentContainer;
     private ViewGroup rootView;//附加View 的 根View
     private ViewGroup dialogView;//附加Dialog 的 根View
@@ -63,7 +63,7 @@ public class BasePickerView {
             //设置界面的背景为透明
             dialogView.setBackgroundColor(Color.TRANSPARENT);
             //这个是真正要加载选择器的父布局
-            contentContainer = (ViewGroup) dialogView.findViewById(R.id.content_container);
+            contentContainer = dialogView.findViewById(R.id.content_container);
             //设置对话框 默认左右间距屏幕30
             params.leftMargin = 30;
             params.rightMargin = 30;
@@ -90,7 +90,7 @@ public class BasePickerView {
                 rootView.setBackgroundColor(mPickerOptions.outSideColor);
             }
             //这个是真正要加载时间选取器的父布局
-            contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
+            contentContainer = rootView.findViewById(R.id.content_container);
             contentContainer.setLayoutParams(params);
         }
         setKeyBackCancelable(true);
@@ -256,7 +256,7 @@ public class BasePickerView {
         }
     }
 
-    private View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
+    private final View.OnKeyListener onKeyBackListener = new View.OnKeyListener() {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_DOWN && isShowing()) {

@@ -13,7 +13,7 @@ public final class SmoothScrollTimerTask extends TimerTask {
 
     private int realTotalOffset;
     private int realOffset;
-    private int offset;
+    private final int offset;
     private final WheelView wheelView;
 
     public SmoothScrollTimerTask(WheelView wheelView, int offset) {

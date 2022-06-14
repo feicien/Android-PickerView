@@ -13,16 +13,16 @@ import java.util.List;
 
 public class WheelOptions<T> {
     private View view;
-    private WheelView wv_option1;
-    private WheelView wv_option2;
-    private WheelView wv_option3;
+    private final WheelView wv_option1;
+    private final WheelView wv_option2;
+    private final WheelView wv_option3;
 
     private List<T> mOptions1Items;
     private List<List<T>> mOptions2Items;
     private List<List<List<T>>> mOptions3Items;
 
     private boolean linkage = true;//默认联动
-    private boolean isRestoreItem; //切换时，还原第一项
+    private final boolean isRestoreItem; //切换时，还原第一项
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
 
@@ -40,9 +40,9 @@ public class WheelOptions<T> {
         super();
         this.isRestoreItem = isRestoreItem;
         this.view = view;
-        wv_option1 = (WheelView) view.findViewById(R.id.options1);// 初始化时显示的数据
-        wv_option2 = (WheelView) view.findViewById(R.id.options2);
-        wv_option3 = (WheelView) view.findViewById(R.id.options3);
+        wv_option1 = view.findViewById(R.id.options1);// 初始化时显示的数据
+        wv_option2 = view.findViewById(R.id.options2);
+        wv_option3 = view.findViewById(R.id.options3);
     }
 
 

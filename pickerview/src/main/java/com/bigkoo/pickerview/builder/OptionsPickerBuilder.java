@@ -20,7 +20,7 @@ import com.contrarywind.view.WheelView;
 public class OptionsPickerBuilder {
 
     //配置类
-    private PickerOptions mPickerOptions;
+    private final PickerOptions mPickerOptions;
 
 
     //Required

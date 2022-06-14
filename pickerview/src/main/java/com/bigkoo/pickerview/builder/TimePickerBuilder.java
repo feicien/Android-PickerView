@@ -20,7 +20,7 @@ import java.util.Calendar;
 
 public class TimePickerBuilder {
 
-    private PickerOptions mPickerOptions;
+    private final PickerOptions mPickerOptions;
 
     //Required
     public TimePickerBuilder(Context context, OnTimeSelectListener listener) {

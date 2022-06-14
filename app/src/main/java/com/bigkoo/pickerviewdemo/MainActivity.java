@@ -39,8 +39,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ArrayList<ProvinceBean> options1Items = new ArrayList<>();
-    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+    private final ArrayList<ProvinceBean> options1Items = new ArrayList<>();
+    private final ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
 
     private Button btn_Options;
     private Button btn_CustomOptions;
@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TimePickerView pvTime, pvCustomTime, pvCustomLunar;
     private OptionsPickerView pvOptions, pvCustomOptions, pvNoLinkOptions;
-    private ArrayList<CardBean> cardItem = new ArrayList<>();
+    private final ArrayList<CardBean> cardItem = new ArrayList<>();
 
-    private ArrayList<String> food = new ArrayList<>();
-    private ArrayList<String> clothes = new ArrayList<>();
-    private ArrayList<String> computer = new ArrayList<>();
+    private final ArrayList<String> food = new ArrayList<>();
+    private final ArrayList<String> clothes = new ArrayList<>();
+    private final ArrayList<String> computer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +69,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initCustomOptionPicker();
         initNoLinkOptionsPicker();
 
-        Button btn_Time = (Button) findViewById(R.id.btn_Time);
-        btn_Options = (Button) findViewById(R.id.btn_Options);
-        btn_CustomOptions = (Button) findViewById(R.id.btn_CustomOptions);
-        btn_CustomTime = (Button) findViewById(R.id.btn_CustomTime);
-        Button btn_no_linkage = (Button) findViewById(R.id.btn_no_linkage);
-        Button btn_to_Fragment = (Button) findViewById(R.id.btn_fragment);
-        Button btn_circle = (Button) findViewById(R.id.btn_circle);
+        Button btn_Time = findViewById(R.id.btn_Time);
+        btn_Options = findViewById(R.id.btn_Options);
+        btn_CustomOptions = findViewById(R.id.btn_CustomOptions);
+        btn_CustomTime = findViewById(R.id.btn_CustomTime);
+        Button btn_no_linkage = findViewById(R.id.btn_no_linkage);
+        Button btn_to_Fragment = findViewById(R.id.btn_fragment);
+        Button btn_circle = findViewById(R.id.btn_circle);
 
 
         btn_Time.setOnClickListener(this);
@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void customLayout(final View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         });
                         //公农历切换
-                        CheckBox cb_lunar = (CheckBox) v.findViewById(R.id.cb_lunar);
+                        CheckBox cb_lunar = v.findViewById(R.id.cb_lunar);
                         cb_lunar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      * @param weight
                      */
                     private void setTimePickerChildWeight(View v, float yearWeight, float weight) {
-                        ViewGroup timePicker = (ViewGroup) v.findViewById(R.id.timepicker);
+                        ViewGroup timePicker = v.findViewById(R.id.timepicker);
                         View year = timePicker.getChildAt(0);
                         LinearLayout.LayoutParams lp = ((LinearLayout.LayoutParams) year.getLayoutParams());
                         lp.weight = yearWeight;
@@ -285,8 +285,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void customLayout(View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -376,9 +376,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setLayoutRes(R.layout.pickerview_custom_options, new CustomListener() {
                     @Override
                     public void customLayout(View v) {
-                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                        final TextView tvAdd = (TextView) v.findViewById(R.id.tv_add);
-                        ImageView ivCancel = (ImageView) v.findViewById(R.id.iv_cancel);
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        final TextView tvAdd = v.findViewById(R.id.tv_add);
+                        ImageView ivCancel = v.findViewById(R.id.iv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

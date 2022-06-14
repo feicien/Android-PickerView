@@ -12,7 +12,7 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
 	
 
 	// items
-	private List<T> items;
+	private final List<T> items;
 
 	/**
 	 * Constructor

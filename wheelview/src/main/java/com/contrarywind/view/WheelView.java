@@ -55,7 +55,7 @@ public class WheelView extends View {
     private boolean isCenterLabel = true;
 
     // Timer mTimer;
-    private ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> mFuture;
 
     private Paint paintOuterText;
